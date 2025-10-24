@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Collections Framework - Developer Blog</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h2>DEV BLOG</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html">Trang chủ</a></li>
+                <li><a href="../about.html">Giới thiệu</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="article-hero">
+        <div class="container">
+            <div class="article-header">
+                <span class="blog-category">Java</span>
+                <h1>Java Collections Framework</h1>
+                <div class="article-meta">
+                    <span>📅 24/10/2025</span>
+                    <span>⏱️ 15 phút đọc</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="article-content">
+        <div class="container">
+            <article class="article-body">
+                <h2>Collections Framework là gì?</h2>
+                <p>
+                    Java Collections Framework là một kiến trúc thống nhất để lưu trữ và thao tác với 
+                    nhóm các objects. Nó cung cấp các interfaces (Set, List, Queue, Map) và implementations 
+                    (ArrayList, HashSet, HashMap, LinkedList...) để làm việc với dữ liệu một cách hiệu quả.
+                </p>
+
+                <h2>Hierarchy của Collections Framework</h2>
+                <p>Collections Framework được tổ chức theo cấu trúc phân cấp rõ ràng:</p>
+                <ul>
+                    <li><strong>Collection Interface:</strong> Root interface của hầu hết collections</li>
+                    <li><strong>List:</strong> Ordered collection, cho phép duplicate elements</li>
+                    <li><strong>Set:</strong> Collection không cho phép duplicate elements</li>
+                    <li><strong>Queue:</strong> Collection được thiết kế để hold elements trước khi processing</li>
+                    <li><strong>Map:</strong> Key-value pairs, không phải là true collection nhưng là part of framework</li>
+                </ul>
+
+                <h2>1. List Interface</h2>
+                <p>
+                    List là ordered collection (sequence) cho phép duplicate elements. Elements có thể 
+                    được access bằng index.
+                </p>
+
+                <h3>ArrayList</h3>
+                <p>
+                    ArrayList sử dụng dynamic array để lưu trữ elements. Nó tốt cho random access 
+                    nhưng chậm khi insert/delete ở giữa list.
+                </p>
+                <pre><code>import java.util.ArrayList;
+import java.util.List;
+
+List&lt;String&gt; fruits = new ArrayList&lt;&gt;();
+fruits.add("Apple");
+fruits.add("Banana");
+fruits.add("Orange");
+fruits.add("Apple"); // Duplicate được phép
+
+System.out.println(fruits.get(0)); // Apple
+System.out.println(fruits.size()); // 4
+
+// Iteration
+for (String fruit : fruits) {
+    System.out.println(fruit);
+}
+
+// Remove
+fruits.remove("Banana");
+fruits.remove(0); // Remove by index</code></pre>
+
+                <h3>LinkedList</h3>
+                <p>
+                    LinkedList sử dụng doubly linked list. Tốt cho frequent insertions/deletions 
+                    nhưng chậm hơn ArrayList cho random access.
+                </p>
+                <pre><code>import java.util.LinkedList;
+
+LinkedList&lt;Integer&gt; numbers = new LinkedList&lt;&gt;();
+numbers.add(10);
+numbers.addFirst(5);  // Add at beginning
+numbers.addLast(20);  // Add at end
+numbers.add(1, 15);   // Add at specific index
+
+System.out.println(numbers); // [5, 15, 10, 20]</code></pre>
+
+                <h2>2. Set Interface</h2>
+                <p>
+                    Set là collection không chứa duplicate elements. Nó modeling mathematical set abstraction.
+                </p>
+
+                <h3>HashSet</h3>
+                <p>
+                    HashSet sử dụng hash table để lưu trữ. Nó không maintain order và có performance tốt 
+                    cho basic operations (add, remove, contains).
+                </p>
+                <pre><code>import java.util.HashSet;
+import java.util.Set;
+
+Set&lt;String&gt; cities = new HashSet&lt;&gt;();
+cities.add("Hanoi");
+cities.add("Ho Chi Minh");
+cities.add("Da Nang");
+cities.add("Hanoi"); // Duplicate - sẽ không được add
+
+System.out.println(cities.size()); // 3
+System.out.println(cities.contains("Hanoi")); // true</code></pre>
+
+                <h3>LinkedHashSet</h3>
+                <p>
+                    LinkedHashSet maintain insertion order. Nó chậm hơn HashSet một chút nhưng preserve order.
+                </p>
+
+                <h3>TreeSet</h3>
+                <p>
+                    TreeSet sử dụng tree structure và maintain elements theo sorted order (natural order 
+                    hoặc custom Comparator).
+                </p>
+                <pre><code>import java.util.TreeSet;
+
+TreeSet&lt;Integer&gt; numbers = new TreeSet&lt;&gt;();
+numbers.add(50);
+numbers.add(20);
+numbers.add(80);
+numbers.add(10);
+
+System.out.println(numbers); // [10, 20, 50, 80] - sorted</code></pre>
+
+                <h2>3. Queue Interface</h2>
+                <p>
+                    Queue được thiết kế để hold elements trước khi processing. Thường follow FIFO 
+                    (First-In-First-Out) order.
+                </p>
+
+                <h3>PriorityQueue</h3>
+                <pre><code>import java.util.PriorityQueue;
+import java.util.Queue;
+
+Queue&lt;Integer&gt; pq = new PriorityQueue&lt;&gt;();
+pq.offer(30);
+pq.offer(10);
+pq.offer(20);
+
+System.out.println(pq.poll()); // 10 - smallest element
+System.out.println(pq.poll()); // 20
+System.out.println(pq.peek()); // 30 - view without removing</code></pre>
+
+                <h2>4. Map Interface</h2>
+                <p>
+                    Map lưu trữ key-value pairs. Mỗi key là unique và map đến exactly one value.
+                </p>
+
+                <h3>HashMap</h3>
+                <p>
+                    HashMap sử dụng hash table. Nó cung cấp constant-time performance cho basic operations 
+                    (get, put) assuming good hash function.
+                </p>
+                <pre><code>import java.util.HashMap;
+import java.util.Map;
+
+Map&lt;String, Integer&gt; ages = new HashMap&lt;&gt;();
+ages.put("John", 25);
+ages.put("Alice", 30);
+ages.put("Bob", 28);
+
+System.out.println(ages.get("Alice")); // 30
+System.out.println(ages.containsKey("John")); // true
+
+// Iteration
+for (Map.Entry&lt;String, Integer&gt; entry : ages.entrySet()) {
+    System.out.println(entry.getKey() + ": " + entry.getValue());
+}
+
+// Get with default value (Java 8+)
+int age = ages.getOrDefault("David", 0);
+
+// Update if exists
+ages.putIfAbsent("Charlie", 35);</code></pre>
+
+                <h3>LinkedHashMap</h3>
+                <p>
+                    LinkedHashMap maintain insertion order của entries.
+                </p>
+
+                <h3>TreeMap</h3>
+                <p>
+                    TreeMap maintain keys theo sorted order. Nó implement NavigableMap interface.
+                </p>
+                <pre><code>import java.util.TreeMap;
+
+TreeMap&lt;String, Integer&gt; map = new TreeMap&lt;&gt;();
+map.put("Charlie", 30);
+map.put("Alice", 25);
+map.put("Bob", 28);
+
+System.out.println(map); // {Alice=25, Bob=28, Charlie=30} - sorted by key</code></pre>
+
+                <h2>Collections Utility Class</h2>
+                <p>
+                    Java cung cấp Collections utility class với nhiều static methods hữu ích:
+                </p>
+                <pre><code>import java.util.Collections;
+
+List&lt;Integer&gt; list = new ArrayList&lt;&gt;(Arrays.asList(5, 2, 8, 1, 9));
+
+// Sort
+Collections.sort(list);
+System.out.println(list); // [1, 2, 5, 8, 9]
+
+// Reverse
+Collections.reverse(list);
+System.out.println(list); // [9, 8, 5, 2, 1]
+
+// Shuffle
+Collections.shuffle(list);
+
+// Find max/min
+int max = Collections.max(list);
+int min = Collections.min(list);
+
+// Binary search (list must be sorted)
+Collections.sort(list);
+int index = Collections.binarySearch(list, 5);
+
+// Fill
+Collections.fill(list, 0); // Fill all with 0
+
+// Frequency
+int freq = Collections.frequency(list, 5);</code></pre>
+
+                <h2>Khi nào dùng gì?</h2>
+                
+                <h3>Chọn List implementation:</h3>
+                <ul>
+                    <li><strong>ArrayList:</strong> Khi cần random access nhiều, ít insert/delete</li>
+                    <li><strong>LinkedList:</strong> Khi cần insert/delete nhiều, ít random access</li>
+                    <li><strong>Vector:</strong> Khi cần thread-safe ArrayList (nhưng nên dùng Collections.synchronizedList)</li>
+                </ul>
+
+                <h3>Chọn Set implementation:</h3>
+                <ul>
+                    <li><strong>HashSet:</strong> Khi không cần order và muốn performance tốt nhất</li>
+                    <li><strong>LinkedHashSet:</strong> Khi cần maintain insertion order</li>
+                    <li><strong>TreeSet:</strong> Khi cần elements được sorted</li>
+                </ul>
+
+                <h3>Chọn Map implementation:</h3>
+                <ul>
+                    <li><strong>HashMap:</strong> General purpose, best performance</li>
+                    <li><strong>LinkedHashMap:</strong> Khi cần maintain insertion order</li>
+                    <li><strong>TreeMap:</strong> Khi cần keys được sorted</li>
+                    <li><strong>Hashtable:</strong> Legacy, nên dùng ConcurrentHashMap thay vì</li>
+                </ul>
+
+                <h2>Best Practices</h2>
+                <ul>
+                    <li>Program to interface, not implementation (dùng List thay vì ArrayList trong declaration)</li>
+                    <li>Initialize collections với appropriate initial capacity nếu biết size</li>
+                    <li>Sử dụng generics để ensure type safety</li>
+                    <li>Consider immutability - dùng Collections.unmodifiableList() khi cần</li>
+                    <li>Implement equals() và hashCode() properly cho custom objects trong HashSet/HashMap</li>
+                    <li>Sử dụng foreach loop hoặc streams (Java 8+) cho iteration</li>
+                </ul>
+
+                <h2>Kết luận</h2>
+                <p>
+                    Java Collections Framework là một trong những features quan trọng nhất của Java. 
+                    Hiểu rõ các interfaces và implementations khác nhau sẽ giúp bạn chọn đúng data structure 
+                    cho từng tình huống, từ đó tối ưu performance và viết code hiệu quả hơn.
+                </p>
+                <p>
+                    Hãy thực hành với các collections này thường xuyên để thành thạo. Trong bài tiếp theo, 
+                    chúng ta sẽ tìm hiểu về Spring Framework!
+                </p>
+
+                <a href="../index.html" class="back-link">← Quay lại trang chủ</a>
+            </article>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Developer Blog. All rights reserved.</p>
+            <p>Made with ❤️ and code</p>
+        </div>
+    </footer>
+</body>
+</html>

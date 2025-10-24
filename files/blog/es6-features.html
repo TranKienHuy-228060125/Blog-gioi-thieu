@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6+ Features mọi Developer nên biết - Developer Blog</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h2>DEV BLOG</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html">Trang chủ</a></li>
+                <li><a href="../about.html">Giới thiệu</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="article-hero">
+        <div class="container">
+            <div class="article-header">
+                <span class="blog-category">JavaScript</span>
+                <h1>ES6+ Features mọi Developer nên biết</h1>
+                <div class="article-meta">
+                    <span>📅 24/10/2025</span>
+                    <span>⏱️ 16 phút đọc</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="article-content">
+        <div class="container">
+            <article class="article-body">
+                <h2>ES6+ là gì?</h2>
+                <p>
+                    ES6 (ECMAScript 2015) là một major update của JavaScript, mang đến nhiều features 
+                    mới giúp code trở nên clean, concise và powerful hơn. Từ ES6 trở đi, JavaScript 
+                    được update hàng năm với những improvements liên tục.
+                </p>
+
+                <h2>1. Let và Const</h2>
+                <p>
+                    Thay thế cho var với block scoping tốt hơn.
+                </p>
+                <pre><code>// var - function scoped, hoisted
+var x = 10;
+if (true) {
+    var x = 20;
+}
+console.log(x); // 20
+
+// let - block scoped
+let y = 10;
+if (true) {
+    let y = 20;
+    console.log(y); // 20
+}
+console.log(y); // 10
+
+// const - block scoped, immutable binding
+const PI = 3.14159;
+// PI = 3.14; // Error!
+
+// const với objects
+const person = {name: "John"};
+person.name = "Jane"; // OK
+person.age = 30;      // OK
+// person = {};       // Error!</code></pre>
+
+                <h2>2. Arrow Functions</h2>
+                <p>
+                    Shorter syntax cho functions và lexical this binding.
+                </p>
+                <pre><code>// Traditional function
+function add(a, b) {
+    return a + b;
+}
+
+// Arrow function
+const add = (a, b) => a + b;
+
+// With single parameter
+const square = x => x * x;
+
+// With no parameters
+const greet = () => console.log("Hello!");
+
+// With block body
+const calculate = (a, b) => {
+    const sum = a + b;
+    const product = a * b;
+    return {sum, product};
+};
+
+// Lexical this
+class Counter {
+    constructor() {
+        this.count = 0;
+    }
+    
+    increment() {
+        // Arrow function preserves this
+        setInterval(() => {
+            this.count++;
+            console.log(this.count);
+        }, 1000);
+    }
+}</code></pre>
+
+                <h2>3. Template Literals</h2>
+                <pre><code>const name = "John";
+const age = 30;
+
+// String interpolation
+const message = `My name is ${name} and I'm ${age} years old`;
+
+// Multi-line strings
+const html = `
+    <div>
+        <h1>${name}</h1>
+        <p>Age: ${age}</p>
+    </div>
+`;
+
+// Expression interpolation
+const price = 19.99;
+const tax = 0.08;
+console.log(`Total: $${(price * (1 + tax)).toFixed(2)}`);</code></pre>
+
+                <h2>4. Destructuring</h2>
+                <h3>Array Destructuring</h3>
+                <pre><code>const numbers = [1, 2, 3, 4, 5];
+
+// Basic
+const [first, second] = numbers;
+
+// Skip elements
+const [a, , c] = numbers; // 1, 3
+
+// Rest operator
+const [head, ...tail] = numbers; // 1, [2,3,4,5]
+
+// Default values
+const [x, y, z = 0] = [1, 2];
+
+// Swapping variables
+let m = 1, n = 2;
+[m, n] = [n, m];</code></pre>
+
+                <h3>Object Destructuring</h3>
+                <pre><code>const person = {
+    name: "John",
+    age: 30,
+    city: "New York",
+    country: "USA"
+};
+
+// Basic
+const {name, age} = person;
+
+// Rename variables
+const {name: personName, age: personAge} = person;
+
+// Default values
+const {name, job = "Unknown"} = person;
+
+// Nested destructuring
+const user = {
+    id: 1,
+    profile: {
+        name: "Alice",
+        email: "alice@example.com"
+    }
+};
+const {profile: {name, email}} = user;
+
+// Function parameters
+function greet({name, age}) {
+    return `${name} is ${age} years old`;
+}
+greet(person);</code></pre>
+
+                <h2>5. Spread và Rest Operators</h2>
+                <h3>Spread Operator (...)</h3>
+                <pre><code>// Array spreading
+const arr1 = [1, 2, 3];
+const arr2 = [4, 5, 6];
+const combined = [...arr1, ...arr2];
+
+// Copy array
+const copy = [...arr1];
+
+// Object spreading
+const obj1 = {a: 1, b: 2};
+const obj2 = {c: 3, d: 4};
+const merged = {...obj1, ...obj2};
+
+// Override properties
+const defaults = {color: "blue", size: "medium"};
+const custom = {size: "large"};
+const final = {...defaults, ...custom}; // size is "large"
+
+// Function arguments
+const numbers = [1, 2, 3, 4, 5];
+console.log(Math.max(...numbers));</code></pre>
+
+                <h3>Rest Operator</h3>
+                <pre><code>// Function parameters
+function sum(...numbers) {
+    return numbers.reduce((a, b) => a + b, 0);
+}
+console.log(sum(1, 2, 3, 4, 5)); // 15
+
+// With other parameters
+function multiply(multiplier, ...numbers) {
+    return numbers.map(n => n * multiplier);
+}
+
+// Object rest
+const {name, ...others} = person;
+console.log(others); // {age: 30, city: "New York", country: "USA"}</code></pre>
+
+                <h2>6. Default Parameters</h2>
+                <pre><code>function greet(name = "Guest", greeting = "Hello") {
+    return `${greeting}, ${name}!`;
+}
+
+greet(); // "Hello, Guest!"
+greet("John"); // "Hello, John!"
+greet("Jane", "Hi"); // "Hi, Jane!"
+
+// Using expressions
+function createUser(name, id = Date.now()) {
+    return {name, id};
+}
+
+// Previous parameters as defaults
+function calculate(a, b = a * 2) {
+    return a + b;
+}</code></pre>
+
+                <h2>7. Enhanced Object Literals</h2>
+                <pre><code>const name = "John";
+const age = 30;
+
+// Property shorthand
+const person = {
+    name,    // same as name: name
+    age,     // same as age: age
+};
+
+// Method shorthand
+const calculator = {
+    add(a, b) {
+        return a + b;
+    },
+    subtract(a, b) {
+        return a - b;
+    }
+};
+
+// Computed property names
+const prop = "dynamicKey";
+const obj = {
+    [prop]: "value",
+    ["computed" + "Key"]: "another value"
+};</code></pre>
+
+                <h2>8. Classes</h2>
+                <pre><code>class Person {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+    
+    greet() {
+        return `Hi, I'm ${this.name}`;
+    }
+    
+    // Getter
+    get info() {
+        return `${this.name}, ${this.age}`;
+    }
+    
+    // Setter
+    set info(value) {
+        [this.name, this.age] = value.split(', ');
+    }
+    
+    // Static method
+    static create(name, age) {
+        return new Person(name, age);
+    }
+}
+
+// Inheritance
+class Developer extends Person {
+    constructor(name, age, language) {
+        super(name, age);
+        this.language = language;
+    }
+    
+    code() {
+        return `${this.name} codes in ${this.language}`;
+    }
+}</code></pre>
+
+                <h2>9. Promises</h2>
+                <pre><code>// Creating a promise
+const fetchData = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        const data = {user: "John"};
+        resolve(data);
+        // or reject(new Error("Failed"));
+    }, 1000);
+});
+
+// Using promises
+fetchData
+    .then(data => console.log(data))
+    .catch(error => console.error(error))
+    .finally(() => console.log("Done"));
+
+// Promise chaining
+fetch('https://api.example.com/users')
+    .then(response => response.json())
+    .then(users => users.map(u => u.name))
+    .then(names => console.log(names))
+    .catch(error => console.error(error));
+
+// Promise.all
+Promise.all([promise1, promise2, promise3])
+    .then(results => console.log(results));
+
+// Promise.race
+Promise.race([promise1, promise2])
+    .then(result => console.log(result));</code></pre>
+
+                <h2>10. Async/Await</h2>
+                <pre><code>// Async function
+async function fetchUser(id) {
+    try {
+        const response = await fetch(`/api/users/${id}`);
+        const user = await response.json();
+        return user;
+    } catch (error) {
+        console.error("Error:", error);
+        throw error;
+    }
+}
+
+// Using async function
+fetchUser(1)
+    .then(user => console.log(user))
+    .catch(error => console.error(error));
+
+// Multiple awaits
+async function getData() {
+    const [users, posts] = await Promise.all([
+        fetch('/api/users').then(r => r.json()),
+        fetch('/api/posts').then(r => r.json())
+    ]);
+    return {users, posts};
+}
+
+// Async arrow function
+const loadData = async () => {
+    const data = await fetchData();
+    return data;
+};</code></pre>
+
+                <h2>11. Modules (Import/Export)</h2>
+                <pre><code>// math.js - Named exports
+export const PI = 3.14159;
+export function add(a, b) {
+    return a + b;
+}
+export class Calculator {
+    // ...
+}
+
+// Or export at bottom
+const subtract = (a, b) => a - b;
+const multiply = (a, b) => a * b;
+export {subtract, multiply};
+
+// Default export
+export default function divide(a, b) {
+    return a / b;
+}
+
+// Importing
+import divide, {PI, add, Calculator} from './math.js';
+import * as Math from './math.js';
+import {add as addition} from './math.js';</code></pre>
+
+                <h2>12. Array Methods</h2>
+                <pre><code>const numbers = [1, 2, 3, 4, 5];
+
+// map - transform elements
+const doubled = numbers.map(n => n * 2);
+
+// filter - select elements
+const evens = numbers.filter(n => n % 2 === 0);
+
+// reduce - aggregate
+const sum = numbers.reduce((acc, n) => acc + n, 0);
+
+// find - first match
+const found = numbers.find(n => n > 3);
+
+// findIndex
+const index = numbers.findIndex(n => n > 3);
+
+// some - at least one
+const hasEven = numbers.some(n => n % 2 === 0);
+
+// every - all
+const allPositive = numbers.every(n => n > 0);
+
+// includes
+const hasThree = numbers.includes(3);
+
+// flat - flatten array
+const nested = [1, [2, 3], [4, [5]]];
+const flattened = nested.flat(2); // depth 2
+
+// flatMap
+const words = ["hello", "world"];
+const chars = words.flatMap(word => word.split(''));</code></pre>
+
+                <h2>13. Optional Chaining (ES2020)</h2>
+                <pre><code>const user = {
+    name: "John",
+    address: {
+        street: "Main St"
+    }
+};
+
+// Without optional chaining
+const zip = user.address && user.address.zipCode;
+
+// With optional chaining
+const zipCode = user.address?.zipCode;
+const country = user.address?.country?.name;
+
+// Function calls
+const result = obj.method?.();
+
+// Array access
+const item = arr?.[0];</code></pre>
+
+                <h2>14. Nullish Coalescing (ES2020)</h2>
+                <pre><code>// OR operator returns first truthy value
+const value1 = 0 || "default"; // "default"
+const value2 = "" || "default"; // "default"
+
+// Nullish coalescing returns first defined value (not null/undefined)
+const value3 = 0 ?? "default"; // 0
+const value4 = "" ?? "default"; // ""
+const value5 = null ?? "default"; // "default"
+const value6 = undefined ?? "default"; // "default"
+
+// Practical use
+function greet(name) {
+    const displayName = name ?? "Guest";
+    return `Hello, ${displayName}!`;
+}</code></pre>
+
+                <h2>Best Practices</h2>
+                <ul>
+                    <li>Use const by default, let when needed, avoid var</li>
+                    <li>Prefer arrow functions for callbacks</li>
+                    <li>Use template literals thay vì string concatenation</li>
+                    <li>Destructure objects và arrays khi có thể</li>
+                    <li>Use async/await thay vì promise chains</li>
+                    <li>Use ES6 modules thay vì CommonJS</li>
+                    <li>Leverage array methods thay vì loops</li>
+                </ul>
+
+                <h2>Kết luận</h2>
+                <p>
+                    ES6+ features đã revolutionize cách chúng ta viết JavaScript. Những features này 
+                    không chỉ làm code ngắn gọn hơn mà còn readable và maintainable hơn. Master những 
+                    features này là essential cho modern JavaScript development.
+                </p>
+
+                <a href="../index.html" class="back-link">← Quay lại trang chủ</a>
+            </article>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Developer Blog. All rights reserved.</p>
+            <p>Made with ❤️ and code</p>
+        </div>
+    </footer>
+</body>
+</html>
